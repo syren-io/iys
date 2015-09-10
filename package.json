@@ -12,10 +12,24 @@
     "url": "https://github.com/syrenmedia/iys/issues"
   },
   "homepage": "https://github.com/syrenmedia/iys#readme",
+  "config": {
+    "host": "local.iys.nmajh.org",
+    "port": 8080
+  },
   "scripts": {
+    "server:browsersync": "browser-sync start --host $npm_package_config_host --port $npm_package_config_port --server",
+    "server:dev:source": "npm run-script server:browsersync src --files \"src/**\"",
+    "server:dev:build": "npm run-script server:browsersync build --files \"build/**\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "angular": "^1.4.5",
+    "angular-ui-bootstrap": "^0.13.4",
+    "bootstrap": "^3.3.5",
     "video.js": "^4.12.15"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.9.3",
+    "tape": "^4.2.0"
   }
 }

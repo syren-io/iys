@@ -1,0 +1,18 @@
+{
+  "name": "iys",
+  "private": true,
+  "version": "0.0.1",
+  "description": "A collection of visitor stories from the National Museum of American Jewish History",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:syrenmedia/iys.git"
+  },
+  "author": "Syren Media",
+  "bugs": {
+    "url": "https://github.com/syrenmedia/iys/issues"
+  },
+  "homepage": "https://github.com/syrenmedia/iys#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -14,5 +14,8 @@
   "homepage": "https://github.com/syrenmedia/iys#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "video.js": "^4.12.15"
   }
 }

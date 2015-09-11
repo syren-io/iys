@@ -23,12 +23,16 @@
   "scripts": {
     "clean": "shjs tasks/clean.js",
     "symlink": "shjs tasks/symlink.js",
-    "bundle": "browserify src/scripts/app.js -o build/app.js",
-    "server:browsersync": "browser-sync start --host $npm_package_config_host --port $npm_package_config_port --server",
-    "server:dev:source": "npm run-script server:browsersync src --files \"src/**\"",
-    "server:dev:build": "npm run-script server:browsersync build --files \"build/**\"",
-    "build": "npm run-script clean && npm run-script symlink && npm run-script bundle",
-    "dev": "npm run-script build && npm run-script server:dev:build",
+    "copy": "shjs tasks/symlink.js copy",
+    "bundle:dev": "browserify src/scripts/app.js -o build/app.js --debug",
+    "bundle:prod": "browserify src/scripts/app.js -o build/app.js -t uglifyify",
+    "server:dev": "browser-sync start --host $npm_package_config_host --port $npm_package_config_port --server build --files \"build/**\"",
+    "server:prod": "http-server $npm_package_config_buildDir -p $npm_package_config_port -a $npm_package_config_host",
+    "build:dev": "npm run-script clean && npm run-script symlink && npm run-script bundle:dev",
+    "build:prod": "npm run-script clean && npm run-script copy && npm run-script bundle:prod",
+    "build": "npm run-script build:prod",
+    "dev": "npm run-script build:dev && npm run-script server:dev",
+    "prod": "npm run-script build:prod && npm run-script server:prod",
     "lint": "eslint ./",
     "test": "tape 'tests/**/*.js' | tap-spec",
     "posttest": "npm run-script lint"
@@ -44,8 +48,10 @@
     "browserify": "^11.0.1",
     "chalk": "^1.1.1",
     "eslint": "^1.3.1",
+    "http-server": "^0.8.0",
     "shelljs": "^0.5.3",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.0"
+    "tape": "^4.2.0",
+    "uglifyify": "^3.0.1"
   }
 }

@@ -9,8 +9,10 @@ var
   sourceDir = config.sourceDir,
   buildDir = config.buildDir,
   symlinkExpression = config.symlinkExpression,
+  copyInsteadOfLink = process.argv.some( function( arg ) { return arg.match( /^copy$/ ); }),
   findFilesInDir,
   symlinkFile,
+  copyFile,
   filesToLink;
 
 // could cause problems
@@ -27,8 +29,16 @@ symlinkFile = function( source, dest ) {
   return shell.ln( '-s', source, dest );
 };
 
+copyFile = function( source, dest ) {
+  util.log( 'making copy from: ' + chalk.cyan( source ) + ' to: ' + chalk.magenta( dest ));
+  return shell.cp( source, dest );
+};
+
 filesToLink = findFilesInDir( 'src' );
-util.log( 'linking files: ', filesToLink );
+util.log(
+  ( copyInsteadOfLink ? 'copying' : 'linking' ) + ' files: ',
+  filesToLink
+);
 
 findFilesInDir( sourceDir ).forEach( function( fileName ) {
   var destFileName = fileName.replace( sourceDir, buildDir ),
@@ -47,7 +57,11 @@ findFilesInDir( sourceDir ).forEach( function( fileName ) {
     util.log( 'creating folder: ' + chalk.magenta( folder ));
   }
 
-  symlinkFile( fileName, fileName.replace( sourceDir, buildDir ));
+  if ( copyInsteadOfLink ) {
+    copyFile( fileName, fileName.replace( sourceDir, buildDir ));
+  } else {
+    symlinkFile( fileName, fileName.replace( sourceDir, buildDir ));
+  }
 });
 
 util.log( chalk.green( 'symlinking done' ));

@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
   <meta charset="UTF-8">
   <title>It's Your Story</title>
+  <link rel="stylesheet" href="app.css" />
 </head>
 <body>
-  <h1>Hello World</h1>
-  <h2>Goodbye World</h2>
+  <header>
+    <h1>It's Your Story</h1>
+    <h2>
+      A collection of visitor stories from the
+      <a href="//www.nmajh.org" target="_blank">
+        Museum of American Jewish History
+      </a>
+    </h2>
+  </header>
+  <section>
+    <header>
+      <button>Previous Question</button>
+      <h3>What does your heritage mean to you?</h3>
+      <button>Next Question</button>
+    </header>
+
+    <button>Previous Response</button>
+    <video id="main-video" controls></video>
+    <button>Next Response</button>
+
+    <footer>
+      <ul id="thumbnails">
+        <li>
+          <img src="//www.placecage.com/50x50" alt=""/>
+        </li>
+        <li>
+          <img src="//www.placecage.com/50x50" alt=""/>
+        </li>
+        <li>
+          <img src="//www.placecage.com/50x50" alt=""/>
+        </li>
+      </ul>
+      <ul id="tag-cloud">
+        <li>Zionism</li>
+        <li>Faith</li>
+        <li>Orthodox</li>
+        <li>Liberty</li>
+        <li>Rabbi</li>
+      </ul>
+    </footer>
+  </section>
 
   <script src="app.js"></script>
 </body>

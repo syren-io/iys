@@ -1,12 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
   <meta charset="UTF-8">
   <title>It's Your Story</title>
+  <link rel="stylesheet" href="app.css" />
 </head>
 <body>
-  <h1>Hello World</h1>
-  <h2>Goodbye World</h2>
+  <header id="page-header">
+    <h1>It's Your Story</h1>
+    <h2>
+      A collection of visitor stories from the
+      <a href="//www.nmajh.org" target="_blank">
+        Museum of American Jewish History
+      </a>
+    </h2>
+  </header>
+  <section id="main-content">
+    <header id="question-header">
+      <button class="btn">Previous Question</button>
+      <h3>What does your heritage mean to you?</h3>
+      <button class="btn">Next Question</button>
+    </header>
+
+    <button class="btn">Previous Response</button>
+    <video id="main-video" controls></video>
+    <button class="btn">Next Response</button>
+
+    <section id="question-footer">
+      <ul id="thumbnails">
+        <li ng-repeat="video in [1,2,3,4,5]">
+          <img src="//www.placecage.com/gif/150/150" alt="video thumbnail"/>
+        </li>
+      </ul>
+      <ul id="tag-cloud">
+        <li ng-repeat="tag in ['Zionism', 'Faith', 'Orthodox', 'Liberty', 'Rabbi']">
+          {{ tag + ", " + ($index + 1) }}
+        </li>
+      </ul>
+    </section>
+  </section>
 
   <script src="app.js"></script>
 </body>

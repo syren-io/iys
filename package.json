@@ -31,7 +31,7 @@
     "bundle:dev": "browserify src/scripts/app.js -o build/app.js --debug",
     "watch:bundle": "onchange 'src/**/*.js' -- npm run-script bundle:dev",
     "bundle:prod": "browserify src/scripts/app.js -o build/app.js -t uglifyify",
-    "server:dev": "browser-sync start --host $npm_package_config_host --port $npm_package_config_port --server build --files \"build/**\"",
+    "server:dev": "browser-sync start --no-open --host $npm_package_config_host --port $npm_package_config_port --server build --files \"build/**\"",
     "server:prod": "http-server $npm_package_config_buildDir -p $npm_package_config_port -a $npm_package_config_host",
     "watch:dev": "{ npm run-script watch:bundle & npm run-script watch:less & npm run-script watch:lint & }",
     "build:dev": "npm run-script clean && npm run-script symlink && npm run-script less:dev && npm run-script bundle:dev",

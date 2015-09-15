@@ -2,9 +2,15 @@
 /**
  * Created by rj on 9/10/15.
  */
-var angular = require( 'angular' );
+var
+  angular = require( 'angular' ),
+  videojs = require( './video.js' );
 
-console.log( 'hello, %o', angular );
+console.dir({
+  'angular': angular,
+  'videojs': videojs
+});
+
 
 setTimeout( function() {
   console.warn( 'hello people' ); //eslint-disable-line

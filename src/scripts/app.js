@@ -7,5 +7,5 @@ var angular = require( 'angular' );
 console.log( 'hello, %o', angular );
 
 setTimeout( function() {
-  alert( 'hello people' ); //eslint-disable-line
+  console.warn( 'hello people' ); //eslint-disable-line
 }, 5000 );

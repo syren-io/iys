@@ -1,5 +1,10 @@
 'use strict';
 
+/***
+ * This is a simple shelljs script for cleaning a dir
+ * from package.json config block
+ */
+
 var
   util = require( 'util' ),
   config = require( '../package.json' ).config,

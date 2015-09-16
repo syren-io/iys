@@ -1,17 +1,19 @@
 'use strict';
 /**
  * Created by rj on 9/10/15.
+ *
+ * the uiBootstrap var is not used, for loading order only
  */
 var
   videojs = require( './video.js' ),
   angular = require( 'angular' ),
-  uiBootstrap = require( 'angular-ui-bootstrap' ),
+  uiBootstrap = require( 'angular-ui-bootstrap' ), //eslint-disable-line
   iysApp = require( './modules/iys.js' );
 
 console.dir({
-  'angular': angular,
-  'videojs': videojs,
-  'iysApp': iysApp
+  angular: angular,
+  videojs: videojs,
+  iysApp: iysApp
 });
 
 setTimeout( function() {

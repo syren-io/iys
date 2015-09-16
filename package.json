@@ -19,7 +19,8 @@
     "symlinkExpression": "\\.(html|ico)$",
     "autoprefixerBrowsers": "> 5%",
     "host": "local.iys.nmajh.org",
-    "port": 8080
+    "port": 8080,
+    "broswerSyncPort": 3001
   },
   "scripts": {
     "clean": "shjs tasks/clean.js",
@@ -32,7 +33,7 @@
     "bundle:dev": "npm run-script browserify --  --debug",
     "watch:bundle": "onchange 'src/**/*.js' -- npm run-script bundle:dev",
     "bundle:prod": "npm run-script browserify -- -t uglifyify",
-    "server:dev": "browser-sync start --no-open --host $npm_package_config_host --port $npm_package_config_port --server build --files \"build/**\"",
+    "server:dev": "browser-sync start --no-open --host $npm_package_config_host --port $npm_package_config_port --ui-port $npm_package_config_broswerSyncPort --server build --files \"build/**\"",
     "server:prod": "http-server $npm_package_config_buildDir -p $npm_package_config_port -a $npm_package_config_host",
     "watch:dev": "parallelshell \"npm run-script watch:bundle\" \"npm run-script watch:less\" \"npm run-script watch:lint\"",
     "build:dev": "npm run-script clean && npm run-script symlink && npm run-script less:dev && npm run-script bundle:dev",
@@ -41,7 +42,7 @@
     "dev": "npm run-script build:dev && parallelshell \"npm run-script watch:dev\" \"npm run-script server:dev\"",
     "prod": "npm run-script build:prod && npm run-script server:prod",
     "lint": "eslint ./",
-    "watch:lint": "onchange 'src/**/*.js' -- npm run-script lint",
+    "watch:lint": "onchange '(src|tasks|tests)/**/*.js' -- npm run-script lint",
     "tape": "tape 'tests/**/*.js' | tap-spec",
     "test": "npm run-script tape",
     "posttest": "npm run-script lint",

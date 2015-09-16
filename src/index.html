@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="app.css" />
+  <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+  <script src="//vjs.zencdn.net/4.12/video.js"></script>
 </head>
 <body class="container-fluid">
   <header id="page-header" class="row">
@@ -27,7 +29,36 @@
 
     <div class="row">
       <button class="btn col-xs-2 btn-primary">Previous Response</button>
-      <video id="main-video" class="col-xs-8" controls></video>
+      <video
+          id="main-video"
+          class="col-xs-8 video-js vjs-default-skin"
+          controls
+          preload="auto"
+          poster="//www.placecage.com/c/1020/720"
+          data-setup='{
+            "textTrackDisplay": true,
+            "loadingSpinner": true,
+            "bigPlayButton": false,
+            "controlBar": {
+              "playToggle": true,
+              "fullscreenToggle": true,
+              "currentTimeDisplay": false,
+              "timeDivider": false,
+              "durationDisplay": false,
+              "remainingTimeDisplay": false,
+              "progressControl":{
+                "seekBar": false
+              },
+              "volumeControl":{
+                "volumeBar":{
+                  "volumeLevel": true,
+                  "volumeHandle": true
+                }
+              },
+              "muteToggle": true
+            }
+          }'
+      ></video>
       <button class="btn col-xs-2 btn-primary">Next Response</button>
     </div>
 

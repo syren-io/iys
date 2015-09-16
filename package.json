@@ -16,7 +16,7 @@
     "sourceDir": "src",
     "buildDir": "build",
     "cleanDir": "build/*",
-    "symlinkExpression": "\\.(html)$",
+    "symlinkExpression": "\\.(html|ico)$",
     "autoprefixerBrowsers": "> 5%",
     "host": "local.iys.nmajh.org",
     "port": 8080

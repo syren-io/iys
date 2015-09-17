@@ -18,7 +18,7 @@ var
   buildDir = config.buildDir,
   symlinkExpression = config.symlinkExpression,
   // script args
-  copyInsteadOfLink = process.argv.some( function( arg ) { return arg.match( /^copy$/ ); }),
+  copyInsteadOfLink = process.argv.some( arg => arg.match( /^copy$/ )),
   // script vars (functions)
   findFilesInDir,
   symlinkFile,
@@ -38,9 +38,7 @@ chalk.enabled = true;
  * @returns {Array.<string>} - an array of string file names
  */
 findFilesInDir = function( dir ) {
-  return shell.find( dir ).filter( function( fileName ) {
-    return fileName.match( symlinkExpression );
-  });
+  return shell.find( dir ).filter( fileName => fileName.match( symlinkExpression ));
 };
 
 /**
@@ -53,7 +51,7 @@ findFilesInDir = function( dir ) {
  * @returns {*} - whatever shell.ln returns
  */
 symlinkFile = function( source, dest ) {
-  util.log( 'making symlink from: ' + chalk.cyan( source ) + ' to: ' + chalk.magenta( dest ));
+  util.log( `making symlink from: ${chalk.cyan( source )} to: ${chalk.magenta( dest )}` );
   return shell.ln( '-s', source, dest );
 };
 
@@ -66,7 +64,7 @@ symlinkFile = function( source, dest ) {
  * @returns {*} - whatever shell.cp returns
  */
 copyFile = function( source, dest ) {
-  util.log( 'making copy from: ' + chalk.cyan( source ) + ' to: ' + chalk.magenta( dest ));
+  util.log( `making copy from: ${chalk.cyan( source )} to: ${chalk.magenta( dest )}` );
   return shell.cp( source, dest );
 };
 
@@ -75,10 +73,7 @@ copyFile = function( source, dest ) {
 
 // Find files to symlink or copy and log result
 filesToLink = findFilesInDir( sourceDir );
-util.log(
-  ( copyInsteadOfLink ? 'copying' : 'linking' ) + ' files: ',
-  filesToLink
-);
+util.log( `${copyInsteadOfLink ? 'copying' : 'linking'} files: `, filesToLink );
 
 // process files
 filesToLink.forEach( function( fileName ) {
@@ -96,7 +91,7 @@ filesToLink.forEach( function( fileName ) {
   // add directories as needed
   if ( !shell.test( '-d', folder )) {
     shell.mkdir( '-p', folder );
-    util.log( 'creating folder: ' + chalk.magenta( folder ));
+    util.log( `creating folder: ${chalk.magenta( folder )}` );
   }
 
   if ( copyInsteadOfLink ) {

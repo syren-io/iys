@@ -3,15 +3,19 @@
  * Created by rj on 9/10/15.
  */
 var
+  videojs = require( './video.js' ),
   angular = require( 'angular' ),
-  videojs = require( './video.js' );
+  iysApp = require( './modules/iys.js' );
 
+// debug
 console.dir({
-  'angular': angular,
-  'videojs': videojs
+  videojs: videojs,
+  iysApp: iysApp
 });
 
+// bootstrap app on ready
+angular.element( document ).ready( function() {
+  console.log( 'bootstrapping' );
+  angular.bootstrap( document, [ iysApp.name ]);
+});
 
-setTimeout( function() {
-  console.warn( 'hello people' ); //eslint-disable-line
-}, 5000 );

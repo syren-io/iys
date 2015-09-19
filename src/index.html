@@ -10,7 +10,7 @@
   <script src="//vjs.zencdn.net/4.12/video.js"></script>
 </head>
 <body class="container-fluid">
-  <header id="page-header" class="row" ng-controller="MyFakeCtrl">
+  <header id="page-header" class="row">
     <h1 class="col-xs-6">It's Your Story</h1>
     <h2 class="col-xs-6">
       A collection of visitor stories from the
@@ -20,21 +20,21 @@
     </h2>
   </header>
 
-  <section id="main-content" class="row">
-    <header id="question-header" class="row">
+  <section id="main-content" class="row" ng-controller="IYSStateController">
+    <header id="question-header" class="row" ng-controller="MyFakeCtrl">
       <button class="btn col-xs-2 btn-primary">Previous Question</button>
-      <h3 class="col-xs-8 text-center">What does your heritage mean to you?</h3>
+      <h3 class="col-xs-8 text-center">{{state.question.text}}</h3>
       <button class="btn col-xs-2 btn-primary">Next Question</button>
     </header>
 
     <div class="row">
-      <button class="btn col-xs-2 btn-primary">Previous Response</button>
+      <button class="btn col-xs-2 btn-primary">Previous Story</button>
       <video
           id="main-video"
           class="col-xs-8 video-js vjs-default-skin"
           controls
           preload="auto"
-          poster="//www.placecage.com/c/1020/720"
+          poster="{{state.story.image}}"
           data-setup='{
             "textTrackDisplay": true,
             "loadingSpinner": true,
@@ -59,18 +59,18 @@
             }
           }'
       ></video>
-      <button class="btn col-xs-2 btn-primary">Next Response</button>
+      <button class="btn col-xs-2 btn-primary">Next Story</button>
     </div>
 
     <section id="question-footer" class="row">
-      <ul id="thumbnails" ng-init="videos = [1,2,3,4,5]" class="col-xs-8 col-xs-offset-2 list-inline row">
-        <li ng-repeat="video in videos" ng-class="['col-xs-' + (12 / videos.length | number:0)]">
-          <img src="//www.placecage.com/gif/150/150" class="img-responsive" alt="video thumbnail"/>
+      <ul id="thumbnails" class="col-xs-8 col-xs-offset-2 list-inline row">
+        <li ng-repeat="story in state.stories" ng-class="['col-xs-' + (12 / state.stories.length | number:0)]">
+          <img ng-src="{{ story.image }}" class="img-responsive" alt="video thumbnail"/>
         </li>
       </ul>
       <ul id="tag-cloud" class="col-xs-8 col-xs-offset-2 list-inline">
-        <li ng-repeat="tag in ['Zionism', 'Faith', 'Orthodox', 'Liberty', 'Rabbi']">
-          {{ tag + ", " + ($index + 1) }}
+        <li ng-repeat="tag in state.story.tags">
+          {{ tag.tag + ", " + tag.count }}
         </li>
       </ul>
     </section>

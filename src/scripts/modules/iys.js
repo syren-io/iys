@@ -12,8 +12,12 @@ var
 
 // add require calls for this module's parts
 
+// factories (services)
+iysApp.service( 'IYSStateService', require( '../services/IYSStateService' ));
+
 // controllers
 iysApp.controller( 'MyFakeCtrl', require( '../controllers/MyFakeCtrl' ));
+iysApp.controller( 'IYSStateController', require( '../controllers/IYSStateController' ));
 
 // directives
 

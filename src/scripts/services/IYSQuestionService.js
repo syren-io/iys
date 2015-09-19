@@ -35,7 +35,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
    * @returns {Promise} - returns an $http service promise
    */
   questionService.getQuestions = function() {
-    return $http.get( baseUrl + '/questions/vis/17' )
+    return $http.get( baseUrl + '/questions/vis' )
       .then(
         // successful
         function( response ) {
@@ -69,6 +69,10 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
    */
   questionService.getQuestionById = function( id ) {
     console.log( 'looking up %d', id );
+    return $http.get( baseUrl + '/questions/vis/' + id )
+      .then(function( response ) {
+        return response.data;
+      });
   };
 
   return questionService;

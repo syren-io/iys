@@ -16,8 +16,8 @@ module.exports = [
         console.dir( data );
         console.dir( data[0] );
 
-        iysState.stories = data;
-        iysState.story = data[0];
+        iysState.questions = data;
+        iysState.question = data[0];
       });
   }
 ];

@@ -55,7 +55,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
     $http.get( baseUrl + '/17/all/recent' )
   ]).then( function( results ) {
     var dataArray = results.map( function( item ) {
-      return item.data.map(function( data ) { return data.id; });
+      return item.data;
     });
 
     console.log( 'testing, /questions/vis/17 vs /17/all/recent/' );

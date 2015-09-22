@@ -21,10 +21,14 @@
   </header>
 
   <section id="main-content" class="row" ng-controller="IYSStateController">
-    <header id="question-header" class="row" ng-controller="MyFakeCtrl">
-      <button class="btn col-xs-2 btn-primary">Previous Question</button>
-      <h3 class="col-xs-8 text-center">{{state.question.text}}</h3>
-      <button class="btn col-xs-2 btn-primary">Next Question</button>
+    <header id="question-header">
+      <carousel interval="0" no-wrap="true" class="col-xs-12">
+        <slide ng-repeat="question in state.questions" active="question.active">
+          <!--<button class="btn col-xs-2 btn-primary">Previous Question</button>-->
+          <h3 class="text-center">{{question.text}}</h3>
+          <!--<button class="btn col-xs-2 btn-primary">Next Question</button>-->
+        </slide>
+      </carousel>
     </header>
 
     <div class="row">

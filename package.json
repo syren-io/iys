@@ -41,6 +41,7 @@
     "build": "npm run-script build:prod",
     "dev": "npm run-script build:dev && parallelshell \"npm run-script watch:dev\" \"npm run-script server:dev\"",
     "prod": "npm run-script build:prod && npm run-script server:prod",
+    "start": "npm run-script prod",
     "lint": "eslint ./",
     "watch:lint": "onchange '(src|tasks|tests)/**/*.js' -- npm run-script lint",
     "tape": "tape 'tests/**/*.js' | tap-spec",

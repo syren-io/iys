@@ -35,10 +35,15 @@ chalk.enabled = true;
  * filter those files by the symlinkExpression in package.json config
  *
  * @param {String} dir - the directory to start searching from
+ * @param {RegExp} matchExpression - a regular expression to filter file names against with `fileName.match( matchExpression )`
  * @returns {Array.<string>} - an array of string file names
  */
-findFilesInDir = function( dir ) {
-  return shell.find( dir ).filter( fileName => fileName.match( symlinkExpression ));
+findFilesInDir = function( dir, matchExpression ) {
+  if ( matchExpression == null ) {
+    return shell.find( dir );
+  }
+
+  return shell.find( dir ).filter( fileName => fileName.match( matchExpression ));
 };
 
 /**
@@ -68,38 +73,49 @@ copyFile = function( source, dest ) {
   return shell.cp( source, dest );
 };
 
+// Export for use by another task?
+module.exports = {
+  findFilesInDir: findFilesInDir,
+  symlinkFile: symlinkFile,
+  copyFile: copyFile
+};
 
-/* START PROCESSING */
+/*
+  START PROCESSING
+   - only if called directly
+*/
+if ( require.main === module ) {
+  // Find files to symlink or copy and log result
+  filesToLink = findFilesInDir( sourceDir, symlinkExpression );
+  util.log( `${copyInsteadOfLink ? 'copying' : 'linking'} files: `, filesToLink );
 
-// Find files to symlink or copy and log result
-filesToLink = findFilesInDir( sourceDir );
-util.log( `${copyInsteadOfLink ? 'copying' : 'linking'} files: `, filesToLink );
+  // process files
+  filesToLink.forEach( function( fileName ) {
+    var
+      destFileName = fileName.replace( sourceDir, buildDir ),
+      folder = path.dirname( destFileName );
 
-// process files
-filesToLink.forEach( function( fileName ) {
-  var destFileName = fileName.replace( sourceDir, buildDir ),
-    folder = path.dirname( destFileName );
+    if ( logDebug ) {
+      util.log({
+        fileName: fileName,
+        destFileName: destFileName,
+        folder: folder
+      });
+    }
 
-  if ( logDebug ) {
-    util.log({
-      fileName: fileName,
-      destFileName: destFileName,
-      folder: folder
-    });
-  }
+    // add directories as needed
+    if ( !shell.test( '-d', folder )) {
+      shell.mkdir( '-p', folder );
+      util.log( `creating folder: ${chalk.magenta( folder )}` );
+    }
 
-  // add directories as needed
-  if ( !shell.test( '-d', folder )) {
-    shell.mkdir( '-p', folder );
-    util.log( `creating folder: ${chalk.magenta( folder )}` );
-  }
+    if ( copyInsteadOfLink ) {
+      copyFile( fileName, fileName.replace( sourceDir, buildDir ));
+    } else {
+      symlinkFile( fileName, fileName.replace( sourceDir, buildDir ));
+    }
+  });
 
-  if ( copyInsteadOfLink ) {
-    copyFile( fileName, fileName.replace( sourceDir, buildDir ));
-  } else {
-    symlinkFile( fileName, fileName.replace( sourceDir, buildDir ));
-  }
-});
-
-// Done
-util.log( chalk.green( 'symlinking done' ));
+  // Done
+  util.log( chalk.green( 'symlinking done' ));
+}

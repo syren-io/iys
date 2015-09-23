@@ -4,11 +4,10 @@ var
   apiConfig = require( '../config' ),
   angular = require( 'angular' ),
   deps = [],
-  moduleName = 'iys.services',
   iysServices;
 
 // Create
-iysServices = angular.module( moduleName, deps );
+iysServices = angular.module( 'iys.services', deps );
 
 // constants
 iysServices.constant( 'IYS_CONFIG', apiConfig );

@@ -5,86 +5,74 @@
   <title>It's Your Story</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Vendor Styles and JS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
-  <script src="//vjs.zencdn.net/4.12/video.js"></script>
-
-  <!-- Our Styles -->
   <link rel="stylesheet" href="app.css" />
 </head>
 <body class="container-fluid">
   <header id="page-header" class="row">
     <h1 class="col-xs-6">It's Your Story</h1>
-    <h2 class="col-xs-6">
+    <h4 class="col-xs-6">
       A collection of visitor stories from the
       <a href="//www.nmajh.org" target="_blank">
         Museum of American Jewish History
       </a>
-    </h2>
+    </h4>
   </header>
 
   <section id="main-content" class="row" ng-controller="IYSStateController">
-    <header id="question-header">
-      <carousel interval="0" no-wrap="true" class="col-xs-12">
+    <header id="question-header" class="row">
+      <carousel interval="0" no-wrap="false" class="col-xs-12">
         <slide ng-repeat="question in state.questions" active="question.active">
-          <!--<button class="btn col-xs-2 btn-primary">Previous Question</button>-->
           <h3 class="text-center">{{question.text}}</h3>
-          <!--<button class="btn col-xs-2 btn-primary">Next Question</button>-->
         </slide>
       </carousel>
     </header>
 
-    <div class="row">
-      <button class="btn col-xs-2 btn-primary">Previous Story</button>
-      <video
-          id="main-video"
-          class="col-xs-8 video-js vjs-default-skin"
-          controls
-          preload="auto"
-          poster="{{state.story.image}}"
-          data-setup='{
-            "textTrackDisplay": true,
-            "loadingSpinner": true,
-            "bigPlayButton": false,
-            "controlBar": {
-              "playToggle": true,
-              "fullscreenToggle": true,
-              "currentTimeDisplay": false,
-              "timeDivider": false,
-              "durationDisplay": false,
-              "remainingTimeDisplay": false,
-              "progressControl":{
-                "seekBar": false
-              },
-              "volumeControl":{
-                "volumeBar":{
-                  "volumeLevel": true,
-                  "volumeHandle": true
-                }
-              },
-              "muteToggle": true
-            }
-          }'
-      ></video>
-      <button class="btn col-xs-2 btn-primary">Next Story</button>
+    <div class="row" ng-controller="IYSVideoController as video">
+
+      <videogular class="row" vg-theme="video.config.theme">
+        <vg-media vg-src="video.currentSource"></vg-media>
+
+        <vg-controls>
+          <vg-play-pause-button></vg-play-pause-button>
+          <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+          <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+          </vg-scrub-bar>
+          <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+          <vg-volume>
+            <vg-mute-button></vg-mute-button>
+            <vg-volume-bar></vg-volume-bar>
+          </vg-volume>
+          <vg-fullscreen-button></vg-fullscreen-button>
+        </vg-controls>
+
+        <vg-poster vg-url='story.image'></vg-poster>
+      </videogular>
+
+      <carousel interval="0" no-wrap="true" class="col-xs-12">
+        <slide ng-repeat="story in state.stories" active="story.active">
+          <!--<video preload="auto" poster="{{story.image}}" ng-src="story.path"></video>-->
+          <img ng-src="{{story.image}}" alt="story thumbnail" />
+        </slide>
+      </carousel>
     </div>
 
     <section id="question-footer" class="row">
+      <!--
       <ul id="thumbnails" class="col-xs-8 col-xs-offset-2 list-inline row">
         <li ng-repeat="story in state.stories" ng-class="['col-xs-' + (12 / state.stories.length | number:0)]">
           <img ng-src="{{ story.image }}" class="img-responsive" alt="video thumbnail"/>
         </li>
       </ul>
+      -->
       <ul id="tag-cloud" class="col-xs-8 col-xs-offset-2 list-inline">
-        <li ng-repeat="tag in state.story.tags">
-          {{ tag.tag + ", " + tag.count }}
+        <li ng-repeat="(tag, count) in state.getActiveQuestion().tags">
+          {{ tag + ", " + count }}
         </li>
       </ul>
     </section>
   </section>
 
-  <!-- Our JS -->
   <script src="app.js"></script>
 </body>
 </html>

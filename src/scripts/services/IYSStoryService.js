@@ -5,6 +5,16 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
     baseUrl = iysConfig.api.url,
     storyService = {};
 
+
+  storyService.getStoriesForQuestionId = function( qId ) {
+    return $http.get( baseUrl + '/questions/vis/' + qId )
+      .then( function( response ) {
+        console.log( 'found stories %o', response.data );
+
+        return response.data;
+      });
+  };
+
   // stories/:storyId
 
   // storyId
@@ -14,6 +24,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
   //    - details, story code, story token, tags, thumbnail
 
   /**
+   * TODO CHECK THIS
    * @param {number} id -- the story id
    * @returns {Promise} -- the $http promise or a TypeError
    */

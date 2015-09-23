@@ -17,6 +17,10 @@
     "buildDir": "build",
     "cleanDir": "build/*",
     "symlinkExpression": "\\.(html|ico)$",
+    "vendorFonts": [
+      "node_modules/bootstrap/dist/fonts",
+      "node_modules/videogular/dist/themes/default/latest/fonts"
+    ],
     "autoprefixerBrowsers": "> 5%",
     "host": "local.iys.nmajh.org",
     "port": 8080,
@@ -24,8 +28,12 @@
   },
   "scripts": {
     "clean": "shjs tasks/clean.js",
-    "symlink": "shjs tasks/symlink.js",
-    "copy": "shjs tasks/symlink.js copy",
+    "symlink": "npm run-script symlink:src && npm run-script symlink:fonts",
+    "symlink:src": "shjs tasks/symlink.js",
+    "symlink:fonts": "shjs tasks/fonts.js",
+    "copy": "npm run-script copy:src && npm run-script copy:fonts",
+    "copy:src": "shjs tasks/symlink.js copy",
+    "copy:fonts": "shjs tasks/fonts.js copy",
     "less:dev": "lessc src/styles/app.less build/app.css --autoprefix=\"$npm_package_config_autoprefixerBrowsers\"",
     "less:prod": "npm run-script less:dev",
     "watch:less": "onchange 'src/**/*.less' -- npm run-script less:dev",
@@ -51,9 +59,10 @@
   },
   "dependencies": {
     "angular": "^1.4.5",
+    "angular-sanitize": "^1.4.6",
     "angular-ui-bootstrap": "^0.13.4",
     "bootstrap": "^3.3.5",
-    "video.js": "^4.12.15"
+    "videogular": "^1.2.8"
   },
   "devDependencies": {
     "browser-sync": "^2.9.3",

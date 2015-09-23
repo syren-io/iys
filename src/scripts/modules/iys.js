@@ -4,9 +4,11 @@
 
 var
   angular = require( 'angular' ),
+  ngSanitize = require( 'angular-sanitize' ),
   uiBootstrap = require( 'angular-ui-bootstrap' ),
   iysServices = require( './iys.services' ).name,
-  deps = [ uiBootstrap, iysServices ],
+  iysVideo = require( './iys.video' ).name,
+  deps = [ ngSanitize, uiBootstrap, iysServices, iysVideo ],
   appName = 'iys',
   iysApp = angular.module( appName, deps );
 

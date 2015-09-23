@@ -35,7 +35,7 @@ chalk.enabled = true;
  * filter those files by the symlinkExpression in package.json config
  *
  * @param {String} dir - the directory to start searching from
- * @param {RegExp} matchExpression - a regular expression to filter file names against with `fileName.match( matchExpression )`
+ * @param {RegExp} [matchExpression] - a regular expression to filter file names against with `fileName.match( matchExpression )`
  * @returns {Array.<string>} - an array of string file names
  */
 findFilesInDir = function( dir, matchExpression ) {
@@ -56,7 +56,7 @@ findFilesInDir = function( dir, matchExpression ) {
  * @returns {*} - whatever shell.ln returns
  */
 symlinkFile = function( source, dest ) {
-  util.log( `making symlink from: ${chalk.cyan( source )} to: ${chalk.magenta( dest )}` );
+  util.log( `making symlink\n\tfrom: ${chalk.cyan( source )}\n\tto: ${chalk.magenta( dest )}` );
   return shell.ln( '-s', source, dest );
 };
 
@@ -69,12 +69,13 @@ symlinkFile = function( source, dest ) {
  * @returns {*} - whatever shell.cp returns
  */
 copyFile = function( source, dest ) {
-  util.log( `making copy from: ${chalk.cyan( source )} to: ${chalk.magenta( dest )}` );
+  util.log( `making copy\n\tfrom: ${chalk.cyan( source )}\n\tto: ${chalk.magenta( dest )}` );
   return shell.cp( source, dest );
 };
 
 // Export for use by another task?
 module.exports = {
+  copyInsteadOfLink: copyInsteadOfLink,
   findFilesInDir: findFilesInDir,
   symlinkFile: symlinkFile,
   copyFile: copyFile

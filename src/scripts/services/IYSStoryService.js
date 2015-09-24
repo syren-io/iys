@@ -5,13 +5,31 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
     baseUrl = iysConfig.api.url,
     storyService = {};
 
-
+  // get the stories array
+  // using: 'iys/questions/vis/:questionId'
   storyService.getStoriesForQuestionId = function( qId ) {
     return $http.get( baseUrl + '/questions/vis/' + qId )
       .then( function( response ) {
-        console.log( 'found stories %o', response.data );
+        var
+          stories = response.data,
+          rewriteHost = function( url ) { return url.replace( 'nmajh.e-io', 'iys.nmajh' ); };
 
-        return response.data;
+        // TODO REMOVE CLEAN DATA HACK
+        stories = stories.map( function( story ) {
+          if ( story.path && typeof story.path === 'string' ) {
+            story.path = rewriteHost( story.path );
+          }
+
+          if ( story.image && typeof story.image === 'string' ) {
+            story.image = rewriteHost( story.image );
+          }
+
+          return story;
+        });
+        // END Clean Data Hack
+
+//        console.log( 'found stories %o', stories );
+        return stories;
       });
   };
 

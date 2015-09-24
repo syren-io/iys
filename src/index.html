@@ -30,7 +30,7 @@
     <div class="row" ng-controller="IYSVideoController as video">
 
       <videogular class="row" vg-theme="video.config.theme">
-        <vg-media vg-src="video.currentSource"></vg-media>
+        <vg-media vg-src="video.storySource"></vg-media>
 
         <vg-controls>
           <vg-play-pause-button></vg-play-pause-button>
@@ -46,7 +46,7 @@
           <vg-fullscreen-button></vg-fullscreen-button>
         </vg-controls>
 
-        <vg-poster vg-url='story.image'></vg-poster>
+        <vg-poster vg-url='state.active.story.image'></vg-poster>
       </videogular>
 
       <carousel interval="0" no-wrap="true" class="col-xs-12">
@@ -66,7 +66,7 @@
       </ul>
       -->
       <ul id="tag-cloud" class="col-xs-8 col-xs-offset-2 list-inline">
-        <li ng-repeat="(tag, count) in state.getActiveQuestion().tags">
+        <li ng-repeat="(tag, count) in state.active.question.tags">
           {{ tag + ", " + count }}
         </li>
       </ul>

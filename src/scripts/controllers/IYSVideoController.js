@@ -7,6 +7,8 @@ module.exports = [
   'IYSStateService',
   'IYSStoryService',
   function( $scope, $sce, iysState, storyService ) {
+    var self = this;
+
     // videogular config
     //    http://www.videogular.com/tutorials/how-to-start/
 
@@ -28,16 +30,27 @@ module.exports = [
 
      */
 
-    $scope.config = {
+    self.config = {
 //      theme: '../node_modules/videogular/dist/themes/default/latest/videogular.css',
       plugins: {
         poster: 'http://www.videogular.com/assets/images/videogular.png'
       }
     };
 
+    $scope.$on( 'IYSStoryChanged', function( event, story ) {
+      console.log( 'saw story change in video ctrlr: %o, %o', event, story );
+      self.storySource = [
+        {
+          src: $sce.trustAsResourceUrl( iysState.state.active.story.path ),
+          type: 'video/mp4'
+        }
+      ];
+    });
+
+    /*
     $scope.currentSource = [
       {
-        src: $sce.trustAsResourceUrl( iysState.getActiveStory().path ),
+        src: $sce.trustAsResourceUrl( iysState.active.story.path ),
         type: 'video/mp4'
       }
     ];
@@ -46,5 +59,6 @@ module.exports = [
       console.log( 'hi event: %o', event );
       console.dir( iysState.getActiveStory());
     });
+    */
   }
 ];

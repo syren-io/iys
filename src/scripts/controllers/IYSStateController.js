@@ -1,43 +1,29 @@
 'use strict';
 
-// Exports controller function with dep injection array
+/**
+ * @ng-controller IYSStateController
+ *
+ * This controller binds the overall state of the application
+ *  from the IYSStateService to the scope of this controller
+ *
+ *  @property state.questions {Array} -- the array of questions
+ *  @property state.stories {Array} -- the array of stories for this question
+ *
+ *  @property state.active {Object} -- an object to hold the "active" question and story
+ *  @property state.active.question {Object} -- the active question
+ *  @property state.active.story {Object} -- the active story (video)
+ *
+ *  It also performs some AJAX calls (via services) to populate the page with some starting data
+ */
+
+// so simple!
 module.exports = [
   '$scope',
-  'IYSQuestionService',
-  'IYSStoryService',
   'IYSStateService',
-  function( $scope, questionService, storyService, iysState ) {
+  function( $scope, stateService ) {
 
-    // Set State Service as "state" on controller scope
-    $scope.state = iysState;
+    // attach state service's state to this scope
+    $scope.state = stateService.state;
 
-    // Load up first round of info
-    questionService.getQuestions()
-      .then( function( data ) {
-        console.dir( data );
-        console.dir( data[0]);
-
-        iysState.questions = data;
-
-        return storyService.getStoriesForQuestionId( data[0].id );
-      })
-      .then( function( stories ) {
-        iysState.stories = stories.map( function( story ) {
-          // TODO REMOVE HACK
-          if ( story.path ) {
-            story.path = story.path.replace( 'nmajh.e-io', 'iys.nmajh' );
-          }
-
-          if ( story.image ) {
-            story.image = story.image.replace( 'nmajh.e-io', 'iys.nmajh' );
-          }
-
-          return story;
-        });
-
-        $scope.$broadcast( 'storyChanged' );
-
-        return stories;
-      });
   }
 ];

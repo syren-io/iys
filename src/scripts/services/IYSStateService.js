@@ -27,12 +27,13 @@ module.exports = [
 
 //    console.log( 'stateCtrl: %o', state );
 
+    // TODO Maybe remove (not needed?)
     broadcastQuestionChange = function( question ) {
-      $rootScope.$broadcast( 'IYSQuestionChanged', question );
+//      $rootScope.$broadcast( 'IYSQuestionChanged', question );
     };
 
     broadcastStoryChange = function( story ) {
-      $rootScope.$broadcast( 'IYSStoryChanged', story );
+//      $rootScope.$broadcast( 'IYSStoryChanged', story );
     };
 
     service.selectQuestionById = function( qId ) {
@@ -77,6 +78,7 @@ module.exports = [
 
     service.selectStory = function( story ) {
       // update active, broadcast to scopes
+//      story.active = true;
       state.active.story = story;
       broadcastStoryChange( story );
 

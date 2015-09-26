@@ -20,7 +20,7 @@
 
   <section id="main-content" class="row" ng-controller="IYSStateController">
     <header id="question-header" class="row">
-      <carousel interval="0" no-wrap="false" class="col-xs-12">
+      <carousel interval="0" no-wrap="false" class="col-xs-12" iys-update-state="question">
         <slide ng-repeat="question in state.questions" active="question.active">
           <h3 class="text-center">{{question.text}}</h3>
         </slide>
@@ -49,10 +49,9 @@
         <vg-poster vg-url='state.active.story.image'></vg-poster>
       </videogular>
 
-      <carousel interval="0" no-wrap="true" class="col-xs-12">
+      <carousel interval="0" no-wrap="true" class="col-xs-12" iys-update-state="story">
         <slide ng-repeat="story in state.stories" active="story.active">
-          <!--<video preload="auto" poster="{{story.image}}" ng-src="story.path"></video>-->
-          <img ng-src="{{story.image}}" alt="story thumbnail" />
+          <img ng-src="{{story.image}}" alt="story thumbnail" style="margin:auto;" />
         </slide>
       </carousel>
     </div>

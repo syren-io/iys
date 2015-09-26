@@ -11,8 +11,8 @@ module.exports = [
 
     // videogular config
     //    http://www.videogular.com/tutorials/how-to-start/
-
     /*
+    {
       sources: [
         {src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"), type: "video/mp4"},
         {src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"), type: "video/webm"},
@@ -27,14 +27,11 @@ module.exports = [
           default: ""
         }
       ]
-
-     */
+    }
+   */
 
     self.config = {
 //      theme: '../node_modules/videogular/dist/themes/default/latest/videogular.css',
-      plugins: {
-        poster: 'http://www.videogular.com/assets/images/videogular.png'
-      }
     };
 
     $scope.$on( 'IYSStoryChanged', function( event, story ) {

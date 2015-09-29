@@ -39,8 +39,19 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
       .then(
         // successful
         function( response ) {
-          console.log( 'got list: %o', response.data );
-          return response.data;
+          var data = response.data;
+
+          // add active property
+          data = data.map( function( question, index ) {
+            if ( question.active == null ) {
+              question.active = index === 0 ? true : false;
+            }
+
+            return question;
+          });
+
+          console.log( 'got list: %o', data );
+          return data;
         },
         // failed
         function( error ) {

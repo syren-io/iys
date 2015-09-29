@@ -2,9 +2,10 @@
 
 module.exports = [
   '$rootScope',
+  '$timeout',
   'IYSQuestionService',
   'IYSStoryService',
-  function( $rootScope, questionService, storyService ) {
+  function( $rootScope, $timeout, questionService, storyService ) {
     var
       // the service instance
       service = {
@@ -36,9 +37,14 @@ module.exports = [
 //      $rootScope.$broadcast( 'IYSStoryChanged', story );
     };
 
-    service.selectQuestionById = function( qId ) {
+    /**
+     * @method selectQuestionById
+     * @param {number} questionId
+     * @returns {boolean}
+     */
+    service.selectQuestionById = function( questionId ) {
       return state.questions.some( function( question ) {
-        if ( question.id === qId ) {
+        if ( question.id === questionId ) {
           // update question & stop looping
           service.selectQuestion( question );
           return true;
@@ -49,6 +55,11 @@ module.exports = [
       });
     };
 
+    /**
+     * @method selectQuestion
+     * @param {IYSQuestion} question
+     * @returns {Promise.<T>|IPromise<TResult>}
+     */
     service.selectQuestion = function( question ) {
       // update active, broadcast to scopes
       state.active.question = question;
@@ -58,12 +69,29 @@ module.exports = [
       return storyService.getStoriesForQuestionId( question.id )
         .then( function( stories ) {
           // update stories to be the ones for this question
-          state.stories = stories;
-          service.selectStory( stories[0]);
+          service.updateStories( stories );
           return question;
         });
     };
 
+    /**
+     * @method updateStories
+     * @param {Array<IYSStory>} stories
+     * @returns
+     */
+    service.updateStories = function( stories ) {
+      state.stories = stories;
+      $timeout( function() {
+        service.selectStory( stories[0]);
+      }, 0 );
+      return true;
+    };
+
+    /**
+     * @method selectStoryById
+     * @param {number} storyId
+     * @returns {boolean}
+     */
     service.selectStoryById = function( storyId ) {
       return state.stories.some( function( story ) {
         if ( story.id === storyId ) {
@@ -76,6 +104,11 @@ module.exports = [
       });
     };
 
+    /**
+     * @method selectStory
+     * @param {IYSStory} story
+     * @returns {boolean}
+     */
     service.selectStory = function( story ) {
       // update active, broadcast to scopes
 //      story.active = true;
@@ -86,7 +119,9 @@ module.exports = [
       return true;
     };
 
-    // Load up first page of questions
+
+    /*** RUN ***/
+    /*** Load up first page of questions ***/
     questionService.getQuestions()
       .then( function( data ) {
         console.log( 'initial load selection: question selected: ' + data[0].id + ', ' + data[0].text );

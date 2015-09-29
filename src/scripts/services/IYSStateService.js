@@ -26,21 +26,25 @@ module.exports = [
       // alias for convenience (JS Objects are by reference)
       state = service.state;
 
-//    console.log( 'stateCtrl: %o', state );
-
-    // TODO Maybe remove (not needed?)
+    // broadcast functions are wrapped in timeouts so the
+    // broadcast action is delayed to the "next" event loop
+    // why angular doesn't do this by default I don't know
     broadcastQuestionChange = function( question ) {
-//      $rootScope.$broadcast( 'IYSQuestionChanged', question );
+      $timeout(function() {
+        $rootScope.$broadcast( 'IYSQuestionChanged', question );
+      });
     };
 
     broadcastStoryChange = function( story ) {
-//      $rootScope.$broadcast( 'IYSStoryChanged', story );
+      $timeout(function() {
+        $rootScope.$broadcast( 'IYSStoryChanged', story );
+      });
     };
 
     /**
      * @method selectQuestionById
-     * @param {number} questionId
-     * @returns {boolean}
+     * @param {number} questionId -- The ID of the question to lookup in state.questions
+     * @returns {boolean} true if the question id was found, false otherwise
      */
     service.selectQuestionById = function( questionId ) {
       return state.questions.some( function( question ) {
@@ -57,8 +61,8 @@ module.exports = [
 
     /**
      * @method selectQuestion
-     * @param {IYSQuestion} question
-     * @returns {Promise}
+     * @param {IYSQuestion} question -- a question object to set to state.active.question
+     * @returns {Promise<IYSQuestion>} -- resolves to the question object after the stories have been fetched
      */
     service.selectQuestion = function( question ) {
       // update active, broadcast to scopes
@@ -76,8 +80,8 @@ module.exports = [
 
     /**
      * @method updateStories
-     * @param {Array<IYSStory>} stories
-     * @returns
+     * @param {Array<IYSStory>} stories -- An array of IYS story objects
+     * @returns {boolean} -- always true
      */
     service.updateStories = function( stories ) {
       state.stories = stories;
@@ -87,8 +91,8 @@ module.exports = [
 
     /**
      * @method selectStoryById
-     * @param {number} storyId
-     * @returns {boolean}
+     * @param {number} storyId -- the story id to look up in state.stories
+     * @returns {boolean} -- true if a story with id was found, false otherwise
      */
     service.selectStoryById = function( storyId ) {
       return state.stories.some( function( story ) {
@@ -104,8 +108,8 @@ module.exports = [
 
     /**
      * @method selectStory
-     * @param {IYSStory} story
-     * @returns {boolean}
+     * @param {IYSStory} story -- the story object to set to state.active.story
+     * @returns {boolean} -- always true
      */
     service.selectStory = function( story ) {
       // update active, broadcast to scopes
@@ -121,13 +125,13 @@ module.exports = [
     /*** RUN ***/
     /*** Load up first page of questions ***/
     questionService.getQuestions()
-      .then( function( data ) {
-        console.log( 'initial load selection: question selected: ' + data[0].id + ', ' + data[0].text );
+      .then( function( questions ) {
+        console.log( 'initial load selection: question selected: ' + questions[0].id + ', ' + questions[0].text );
 
         // update "state"
-        state.questions = data;
+        state.questions = questions;
 
-        return service.selectQuestion( data[0]);
+        return service.selectQuestion( questions[0]);
       });
 
     // TODO REMOVE (EXPORTED FOR TESTING)

@@ -34,28 +34,16 @@ module.exports = [
 //      theme: '../node_modules/videogular/dist/themes/default/latest/videogular.css',
     };
 
+
     $scope.$on( 'IYSStoryChanged', function( event, story ) {
       console.log( 'saw story change in video ctrlr: %o, %o', event, story );
       self.storySource = [
         {
+          // 'http://s3.amazonaws.com/nmajh-live/data/iys/videos/2/15822_640_360_25_544k.mp4'
           src: $sce.trustAsResourceUrl( iysState.state.active.story.path ),
           type: 'video/mp4'
         }
       ];
     });
-
-    /*
-    $scope.currentSource = [
-      {
-        src: $sce.trustAsResourceUrl( iysState.active.story.path ),
-        type: 'video/mp4'
-      }
-    ];
-
-    $scope.$on( 'storyChanged', function( event ) {
-      console.log( 'hi event: %o', event );
-      console.dir( iysState.getActiveStory());
-    });
-    */
   }
 ];

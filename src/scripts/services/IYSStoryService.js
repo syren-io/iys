@@ -25,10 +25,6 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
             story.image = rewriteHost( story.image );
           }
 
-          if ( story.active == null ) {
-            story.active = index === 0;
-          }
-
           return story;
         });
         // END Clean Data Hack

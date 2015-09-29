@@ -17,6 +17,10 @@
     "buildDir": "build",
     "cleanDir": "build/*",
     "symlinkExpression": "\\.(html|ico)$",
+    "vendorFonts": [
+      "node_modules/bootstrap/dist/fonts",
+      "node_modules/videogular/dist/themes/default/latest/fonts"
+    ],
     "autoprefixerBrowsers": "> 5%",
     "host": "local.iys.nmajh.org",
     "port": 8080,
@@ -24,14 +28,19 @@
   },
   "scripts": {
     "clean": "shjs tasks/clean.js",
-    "symlink": "shjs tasks/symlink.js",
-    "copy": "shjs tasks/symlink.js copy",
+    "symlink": "npm run-script symlink:src && npm run-script symlink:fonts",
+    "symlink:src": "shjs tasks/symlink.js",
+    "symlink:fonts": "shjs tasks/fonts.js",
+    "copy": "npm run-script copy:src && npm run-script copy:fonts",
+    "copy:src": "shjs tasks/symlink.js copy",
+    "copy:fonts": "shjs tasks/fonts.js copy",
     "less:dev": "lessc src/styles/app.less build/app.css --autoprefix=\"$npm_package_config_autoprefixerBrowsers\"",
     "less:prod": "npm run-script less:dev",
     "watch:less": "onchange 'src/**/*.less' -- npm run-script less:dev",
     "browserify": "browserify -p browserify-notify src/scripts/app.js -o build/app.js",
-    "bundle:dev": "npm run-script browserify --  --debug",
-    "watch:bundle": "onchange 'src/**/*.js' -- npm run-script bundle:dev",
+    "watchify": "watchify -p browserify-notify src/scripts/app.js -o build/app.js --verbose",
+    "bundle:dev": "npm run-script browserify -- --debug",
+    "watch:bundle": "npm run-script watchify -- --debug",
     "bundle:prod": "npm run-script browserify -- -t uglifyify",
     "server:dev": "browser-sync start --no-open --host $npm_package_config_host --port $npm_package_config_port --ui-port $npm_package_config_broswerSyncPort --server build --files \"build/**\"",
     "server:prod": "http-server $npm_package_config_buildDir -p $npm_package_config_port -a $npm_package_config_host",
@@ -41,6 +50,7 @@
     "build": "npm run-script build:prod",
     "dev": "npm run-script build:dev && parallelshell \"npm run-script watch:dev\" \"npm run-script server:dev\"",
     "prod": "npm run-script build:prod && npm run-script server:prod",
+    "start": "npm run-script prod",
     "lint": "eslint ./",
     "watch:lint": "onchange '(src|tasks|tests)/**/*.js' -- npm run-script lint",
     "tape": "tape 'tests/**/*.js' | tap-spec",
@@ -50,9 +60,11 @@
   },
   "dependencies": {
     "angular": "^1.4.5",
+    "angular-animate": "^1.4.6",
+    "angular-sanitize": "^1.4.6",
     "angular-ui-bootstrap": "^0.13.4",
     "bootstrap": "^3.3.5",
-    "video.js": "^4.12.15"
+    "videogular": "^1.2.8"
   },
   "devDependencies": {
     "browser-sync": "^2.9.3",
@@ -68,6 +80,7 @@
     "shelljs": "^0.5.3",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.4.0"
   }
 }

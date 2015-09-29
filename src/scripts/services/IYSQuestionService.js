@@ -35,12 +35,12 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
    * @returns {Promise} - returns an $http service promise
    */
   questionService.getQuestions = function() {
-    return $http.get( baseUrl + '/questions/vis/17' )
+    return $http.get( baseUrl + '/list' )
       .then(
         // successful
         function( response ) {
-          console.log( 'got list: %o', response );
-          return response;
+          console.log( 'got list: %o', response.data );
+          return response.data;
         },
         // failed
         function( error ) {
@@ -50,25 +50,22 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
       );
   };
 
-  $q.all([
-    $http.get( baseUrl + '/questions/vis/17' ),
-    $http.get( baseUrl + '/17/all/recent' )
-  ]).then( function( results ) {
-    var dataArray = results.map( function( item ) {
-      return item.data.map(function( data ) { return data.id; });
-    });
-
-    console.log( 'testing, /questions/vis/17 vs /17/all/recent/' );
-    console.dir( dataArray );
-  });
-
   /**
    *
    * @param {number} id - the question id to look up
    * @returns {undefined}
    */
   questionService.getQuestionById = function( id ) {
+    console.warn( 'Can not look up question by id :(' );
+    return $q.resolve( null );
+
+    /*
     console.log( 'looking up %d', id );
+    return $http.get( baseUrl + '/questions/vis/' + id )
+      .then(function( response ) {
+        return response.data;
+      });
+    */
   };
 
   return questionService;

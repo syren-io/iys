@@ -49,7 +49,13 @@
         <vg-poster vg-url='state.active.story.image'></vg-poster>
       </videogular>
 
-      <carousel interval="0" no-wrap="true" class="col-xs-12" iys-update-state="story">
+      <carousel
+          interval="0"
+          no-wrap="true"
+          class="col-xs-12"
+          iys-update-state="story"
+          template-url="./tpl/carousel.html">
+
         <slide ng-repeat="story in state.stories" active="story.active">
           <img ng-src="{{story.image}}" alt="story thumbnail" style="margin:auto;" />
         </slide>

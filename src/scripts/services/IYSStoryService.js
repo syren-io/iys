@@ -26,7 +26,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
           }
 
           if ( story.active == null ) {
-            story.active = index === 0 ? true : false;
+            story.active = index === 0;
           }
 
           return story;

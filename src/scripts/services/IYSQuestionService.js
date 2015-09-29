@@ -44,7 +44,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
           // add active property
           data = data.map( function( question, index ) {
             if ( question.active == null ) {
-              question.active = index === 0 ? true : false;
+              question.active = index === 0;
             }
 
             return question;
@@ -62,7 +62,7 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
   };
 
   /**
-   *
+   * @deprecated
    * @param {number} id - the question id to look up
    * @returns {undefined}
    */

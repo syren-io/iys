@@ -58,7 +58,7 @@ module.exports = [
     /**
      * @method selectQuestion
      * @param {IYSQuestion} question
-     * @returns {Promise.<T>|IPromise<TResult>}
+     * @returns {Promise}
      */
     service.selectQuestion = function( question ) {
       // update active, broadcast to scopes
@@ -81,9 +81,7 @@ module.exports = [
      */
     service.updateStories = function( stories ) {
       state.stories = stories;
-      $timeout( function() {
-        service.selectStory( stories[0]);
-      }, 0 );
+      service.selectStory( stories[0]);
       return true;
     };
 

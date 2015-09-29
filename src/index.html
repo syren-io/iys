@@ -27,45 +27,48 @@
       </carousel>
     </header>
 
-    <div class="row" ng-controller="IYSVideoController as video">
+    <div class="row video-section">
+      <div class="col-xs-10 col-xs-offset-1" ng-controller="IYSVideoController as video">
+        <videogular vg-theme="video.config.theme">
+          <vg-media vg-src="video.storySource"></vg-media>
 
-      <videogular class="row" vg-theme="video.config.theme">
-        <vg-media vg-src="video.storySource"></vg-media>
+          <vg-controls>
+            <vg-play-pause-button></vg-play-pause-button>
+            <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+            <vg-scrub-bar>
+              <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
+            <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+            <vg-volume>
+              <vg-mute-button></vg-mute-button>
+              <vg-volume-bar></vg-volume-bar>
+            </vg-volume>
+            <vg-fullscreen-button></vg-fullscreen-button>
+          </vg-controls>
 
-        <vg-controls>
-          <vg-play-pause-button></vg-play-pause-button>
-          <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-          <vg-scrub-bar>
-            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-          </vg-scrub-bar>
-          <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-          <vg-volume>
-            <vg-mute-button></vg-mute-button>
-            <vg-volume-bar></vg-volume-bar>
-          </vg-volume>
-          <vg-fullscreen-button></vg-fullscreen-button>
-        </vg-controls>
-
-        <vg-poster vg-url='state.active.story.image'></vg-poster>
-      </videogular>
-
-      <carousel interval="0" no-wrap="true" class="col-xs-12" iys-update-state="story">
-        <slide ng-repeat="story in state.stories" active="story.active">
-          <img ng-src="{{story.image}}" alt="story thumbnail" style="margin:auto;" />
-        </slide>
-      </carousel>
+          <vg-poster vg-url='state.active.story.image'></vg-poster>
+        </videogular>
+      </div>
     </div>
 
+
+    <ul id="thumbnails" class="row col-xs-12 list-inline row filmstrip" ng-controller="IYSFilmstripController">
+      <li
+          ng-repeat="story in state.stories"
+          class="col-xs-3"
+          ng-class="{ active: story === state.active.story }"
+          ng-click="selectStory(story)">
+
+        <img ng-src="{{ story.image }}" class="img-responsive" alt="video thumbnail" />
+      </li>
+    </ul>
+
     <section id="question-footer" class="row">
-      <!--
-      <ul id="thumbnails" class="col-xs-8 col-xs-offset-2 list-inline row">
-        <li ng-repeat="story in state.stories" ng-class="['col-xs-' + (12 / state.stories.length | number:0)]">
-          <img ng-src="{{ story.image }}" class="img-responsive" alt="video thumbnail"/>
-        </li>
-      </ul>
-      -->
-      <ul id="tag-cloud" class="col-xs-8 col-xs-offset-2 list-inline">
-        <li ng-repeat="(tag, count) in state.active.question.tags">
+      <ul id="tag-cloud" class="col-xs-10 col-xs-offset-1 list-inline tag-cloud" ng-controller="IYSTagController">
+        <li
+            ng-repeat="(tag, count) in state.active.question.tags"
+            ng-class="{ active: tagMatches(tag) }">
+
           {{ tag + ", " + count }}
         </li>
       </ul>

@@ -12,10 +12,11 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
       .then( function( response ) {
         var
           stories = response.data,
+          // clean url helper
           rewriteHost = function( url ) { return url.replace( 'nmajh.e-io', 'iys.nmajh' ); };
 
         // TODO REMOVE CLEAN DATA HACK
-        stories = stories.map( function( story ) {
+        stories = stories.map( function( story, index ) {
           if ( story.path && typeof story.path === 'string' ) {
             story.path = rewriteHost( story.path );
           }

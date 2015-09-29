@@ -48,8 +48,8 @@ module.exports = [ '$animate', 'IYSStateService', function( $animate, iysState )
             if ( phase === 'close' ) {
               if ( nextSlide.$parent[ toUpdate ] != null ) {
                 updateState( toUpdate, nextSlide.$parent[ toUpdate ]);
-                console.log( 'updating' );
-                console.dir( nextSlide.$parent[ toUpdate ]);
+//                console.log( 'updating' );
+//                console.dir( nextSlide.$parent[ toUpdate ]);
               }
 
               $animate.off( 'addClass', elem );

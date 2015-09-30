@@ -16,7 +16,7 @@
     "sourceDir": "src",
     "buildDir": "build",
     "cleanDir": "build/*",
-    "symlinkExpression": "\\.(html|ico)$",
+    "symlinkExpression": "\\.(html|ico|png|jpg|jpeg)$",
     "vendorFonts": [
       "node_modules/bootstrap/dist/fonts",
       "node_modules/videogular/dist/themes/default/latest/fonts"

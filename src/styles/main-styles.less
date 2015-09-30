@@ -1,12 +1,93 @@
 
 // testing importing is working....
 
+body{
+	background-color: #9EC7E9;
+	font-family: "Open Sans", "Helvetica Neue", "Helvetica", Tahoma, sans-serif;
+}
+
 h1 {
   color: grey;
 }
 
+.container-fluid{
+	padding: 0;
+}
+
+#page-header{
+	background: #fff;
+	width: 100%;
+	float: left;
+	h1{
+		font-size: 24px;
+		color: #292929;
+		font-weight: bold;
+		float: left;
+		display: inline-block;
+		padding: 0;
+		margin: 5px 20px 10px;
+		line-height: 1;
+		text-transform: uppercase;
+
+		small{
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+	h4{
+		font-size: 14px;
+		float: right;
+		text-align: right;
+		display: inline-block;
+		margin-top: 15px;
+	}
+	.logo{
+		display: inline-block;
+		float: right;
+		height: 35px;
+		width: auto;
+		margin-top: 15px;
+		margin-left: 6px;
+		opacity: .7;
+	}
+}
+
 #question-header {
-  //margin-bottom: 15px;
+  float: left;
+  width: 100%;
+  margin-top: 30px;
+  .carousel-indicators{
+  	display: none;
+  }
+}
+
+.video-player{
+	margin-top: 50px;
+	background: #fff;
+	box-shadow: 0 5px 0 rgba(0,0,0,0.3);
+	padding: 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	.video-controls{
+		padding: 20px;
+	}
+}
+
+.thumbnail-wrapper{
+	margin-top: 30px;
+	background: #fff;
+	padding: 0;
+	overflow-x: scroll;
+}
+#thumbnails{
+	width: 1000px;
+	margin-bottom: 0;
+	li{
+		width: 100px;
+		padding: 0;
+		border-right: 1px solid #fff;
+		opacity: .5;
+	}
 }
 
 .video-section > button {
@@ -16,11 +97,34 @@ h1 {
 }
 
 .filmstrip > li.active {
-  outline: red solid 2px;
+  opacity: 1;
   //border: 2px solid red;
 }
-
-.tag-cloud > li.active {
-  color: white;
-  background-color: black;
+.tag-cloud{
+	text-align: center;
+	margin-top: 30px;
+	.tag{
+		margin-bottom: 10px;
+		font-size: 12px;
+		padding: 0;
+		.text{
+			padding: 3px 5px;
+			display: inline-block;
+		}
+		.number{
+			padding: 3px 5px;
+			border-left: 1px solid #eea236;
+			display: inline-block;
+		}
+		.badge{
+			font-size: 10px;
+			padding: 3px 5px;
+		}
+	}
+	li.active{
+		.tag{
+			
+		}
+	}
 }
+

@@ -134,9 +134,6 @@ module.exports = [
         return service.selectQuestion( questions[0]);
       });
 
-    // TODO REMOVE (EXPORTED FOR TESTING)
-    window.iysState = service;
-
     return service;
   }
 ];

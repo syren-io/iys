@@ -28,6 +28,10 @@
     </header>
 
     <div class="row video-section">
+      <div class="row" ng-controller="IYSFeedbackController">
+        <button class="like btn btn-default col-xs-2 col-xs-offset-1" ng-click="likeStory(state.active.story)">Like {{state.active.story.likes}}</button>
+        <button class="flag btn btn-default col-xs-2 col-xs-offset-1" ng-click="flagStory(state.active.story)">Flag</button>
+      </div>
       <div class="col-xs-10 col-xs-offset-1" ng-controller="IYSVideoController as video">
         <videogular vg-theme="video.config.theme">
           <vg-media vg-src="video.storySource"></vg-media>

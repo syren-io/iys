@@ -6,53 +6,53 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
     storyService = {};
 
   // get the stories array
-  // using: 'iys/questions/vis/:questionId'
-  storyService.getStoriesForQuestionId = function( qId ) {
-    return $http.get( baseUrl + '/questions/vis/' + qId )
+  // using: 'iys/:questionId/all/recent'
+  // TODO: Add Pagination?
+  storyService.getStoriesForQuestionId = function( questionId ) {
+    return $http.get( baseUrl + '/' + questionId + '/all/recent' )
       .then( function( response ) {
-        var
-          stories = response.data,
-          // clean url helper
-          rewriteHost = function( url ) { return url.replace( 'nmajh.e-io', 'iys.nmajh' ); };
+        var stories = response.data;
 
-        // TODO REMOVE CLEAN DATA HACK
-        stories = stories.map( function( story, index ) {
-          if ( story.path && typeof story.path === 'string' ) {
-            story.path = rewriteHost( story.path );
-          }
-
-          if ( story.image && typeof story.image === 'string' ) {
-            story.image = rewriteHost( story.image );
-          }
-
+        // Build Image URL for Story Thumbnails
+        stories = stories.map( function( story ) {
+          story.image = '//' + iysConfig.api.hostname + '/images/iys/exact/768/432/' + story.image_id + '.png';
           return story;
         });
-        // END Clean Data Hack
 
-//        console.log( 'found stories %o', stories );
         return stories;
       });
   };
 
-  // stories/:storyId
+  // like story by id
+  // return new like count for story
+  storyService.likeStoryById = function( storyId ) {
+    return $http.post(
+      baseUrl + '/stories/like',
+      'story_id=' + storyId,
+      {
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        }
+      }
+    )
+      .then( function( response ) {
+        var likeCount = response.data;
+        return likeCount;
+      });
+  };
 
-  // storyId
-  //  - empty -- Error
-  //  - if not approved returns "rejected page"
-  //  - renders page
-  //    - details, story code, story token, tags, thumbnail
 
-  /**
-   * TODO CHECK THIS
-   * @param {number} id -- the story id
-   * @returns {Promise} -- the $http promise or a TypeError
-   */
-  storyService.getStoryById = function( id ) {
-    if ( id == null ) {
-      return $q.reject( new TypeError( 'Required "id" parameter is missing!' ));
-    }
-
-    return $http.get( baseUrl + '/stories/' + id );
+  // flag story by id
+  storyService.flagStoryById = function( storyId ) {
+    return $http.post(
+      baseUrl + '/stories/flag',
+      'story_id=' + storyId,
+      {
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
   };
 
   return storyService;

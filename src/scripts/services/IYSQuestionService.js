@@ -50,33 +50,13 @@ module.exports = [ 'IYS_CONFIG', '$http', '$q', function( iysConfig, $http, $q )
             return question;
           });
 
-          console.log( 'got list: %o', data );
           return data;
         },
         // failed
         function( error ) {
-          console.warn( 'got error: ', error );
           throw error;
         }
       );
-  };
-
-  /**
-   * @deprecated
-   * @param {number} id - the question id to look up
-   * @returns {undefined}
-   */
-  questionService.getQuestionById = function( id ) {
-    console.warn( 'Can not look up question by id :(' );
-    return $q.resolve( null );
-
-    /*
-    console.log( 'looking up %d', id );
-    return $http.get( baseUrl + '/questions/vis/' + id )
-      .then(function( response ) {
-        return response.data;
-      });
-    */
   };
 
   return questionService;

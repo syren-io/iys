@@ -22,6 +22,7 @@ iysApp.factory( 'IYSStateService', require( '../services/IYSStateService' ));
 iysApp.controller( 'IYSStateController', require( '../controllers/IYSStateController' ));
 iysApp.controller( 'IYSFilmstripController', require( '../controllers/IYSFilmstripController' ));
 iysApp.controller( 'IYSTagController', require( '../controllers/IYSTagController' ));
+iysApp.controller( 'IYSFeedbackController', require( '../controllers/IYSFeedbackController' ));
 
 // directives
 iysApp.directive( 'iysUpdateState', require( '../directives/IYSUpdateStateDirective' ));

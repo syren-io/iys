@@ -5,7 +5,9 @@ var
   config = {
     api: {
       protocol: 'http://',
-      hostname: 'nmajh.e-io.org',
+      //TODO: CURRENTLY ON PRODUCTION SERVER, NEED DEV SERVER UPDATED WITH LATEST CODE AND DATA FOR TESTING
+      //hostname: 'nmajh.e-io.org',
+      hostname: 'iys.nmajh.org',
       port: 80,
       path: 'iys'
     }

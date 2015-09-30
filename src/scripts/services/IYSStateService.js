@@ -30,13 +30,13 @@ module.exports = [
     // broadcast action is delayed to the "next" event loop
     // why angular doesn't do this by default I don't know
     broadcastQuestionChange = function( question ) {
-      $timeout(function() {
+      $timeout( function() {
         $rootScope.$broadcast( 'IYSQuestionChanged', question );
       });
     };
 
     broadcastStoryChange = function( story ) {
-      $timeout(function() {
+      $timeout( function() {
         $rootScope.$broadcast( 'IYSStoryChanged', story );
       });
     };

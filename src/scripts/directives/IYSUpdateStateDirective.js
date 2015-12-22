@@ -62,4 +62,5 @@ module.exports = [ '$animate', 'IYSStateService', function( $animate, iysState )
 
     }
   };
-}];
+} ];
+
